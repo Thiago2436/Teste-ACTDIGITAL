@@ -1,0 +1,25 @@
+{
+  "name": "teste-actdigital",
+  "version": "1.0.0",
+  "description": "Essa tarefa é interessante porque reúne vários aspectos importantes de um pipeline de CI/CD moderno e demonstra como integrar processos de automação, qualidade de código e segurança nas operações de deploy.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Thiago2436/Teste-ACTDIGITAL.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Thiago2436/Teste-ACTDIGITAL/issues"
+  },
+  "homepage": "https://github.com/Thiago2436/Teste-ACTDIGITAL#readme",
+  "devDependencies": {
+    "express": "^4.21.2",
+    "jest": "^29.7.0",
+    "supertest": "^7.1.0"
+  }
+}

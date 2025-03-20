@@ -1,0 +1,81 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Executar testes
+        run: npm test
+
+      - name: Construir aplicação
+        run: npm run build || echo "Nenhum comando de build necessário"
+
+      - name: Armazenar artefato
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-build
+          path: .
+
+  release:
+    needs: build-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Criar Release no GitHub
+        uses: softprops/action-gh-release@v1
+        with:
+          files: .
+        env:
+          HUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy:
+    needs: release
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://meu-site-teste.com
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Deploy para Servidor de Testes
+        run: echo "Deploy realizado com sucesso!"
+
+  notify:
+    if: failure()
+    needs: [build-test, release, deploy]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Notificação de Falha
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          to: thiagomartins.florestal@gmail.com
+          from: greicesmartinez@gmail.com
+          subject: "Falha no Pipeline CI/CD"
+          body: "O pipeline falhou! Verifique os logs no GitHub Actions."
