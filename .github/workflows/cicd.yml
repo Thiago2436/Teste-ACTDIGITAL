@@ -57,11 +57,22 @@ jobs:
       - name: Verificar as tags enviadas
         run: git tag -l
       
-      - name: Criar Release no GitHub
-        uses: softprops/action-gh-release@v1
-        with:
-           token: ${{ secrets.GITHUB_TOKEN }}
-                 
+      - name: Criar Release no GitHub via API
+        run: |
+         TAG=$(git describe --tags)
+         curl -X POST "https://api.github.com/repos/Thiago2436/Teste-ACTDIGITAL/releases" \
+           -H "Authorization: token ${{ secrets.PERSONAL_ACCESS_TOKEN }}" \
+           -H "Accept: application/vnd.github.v3+json" \
+          -d '{
+             "tag_name": "'"$TAG"'",
+             "target_commitish": "main",
+             "name": "Release '"$TAG"'",
+             "body": "Nova versão '"$TAG"' lançada!",
+             "draft": false,
+             "prerelease": false   }'
+        
+
+             
   deploy:
     needs: release
     runs-on: ubuntu-latest
