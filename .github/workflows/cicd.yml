@@ -46,7 +46,8 @@ jobs:
         run: git tag v$(date +'%Y%m%d%H%M%S')
       
       - name: Enviar tag
-        run: git push origin --tags
+        run: run: git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/Thiago2436/Teste-ACTDIGITAL.git --tags
+
 
       - name: Criar Release no GitHub
         uses: softprops/action-gh-release@v1
