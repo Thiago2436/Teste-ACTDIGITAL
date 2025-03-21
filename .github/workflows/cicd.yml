@@ -104,20 +104,3 @@ jobs:
             subject: "❌ Falha no Pipeline CI/CD"
             body: "O pipeline falhou! Verifique os logs no GitHub Actions."
 
-  notify_success:
-    if: success()
-    needs: [build-test, release, deploy]
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Notificação de Sucesso
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.gmail.com
-          server_port: 587
-          username: ${{ secrets.MAIL_USERNAME }}
-          password: ${{ secrets.MAIL_PASSWORD }}
-          to: thiagomartins.florestal@gmail.com
-          from: thiagomartins.florestal@gmail.com
-          subject: "✅ Sucesso no Pipeline CI/CD"
-          body: "O pipeline foi executado com sucesso!"
