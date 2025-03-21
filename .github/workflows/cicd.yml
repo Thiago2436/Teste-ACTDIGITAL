@@ -2,6 +2,7 @@ name: CI/CD Pipeline
 
 on:
   push:
+    
     branches:
       - main
 
@@ -38,6 +39,7 @@ jobs:
     needs: build-test
     runs-on: ubuntu-latest
     
+
     permissions: 
       contents: write
   
@@ -51,12 +53,14 @@ jobs:
       
       - name: Enviar tag
         run:  git push https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/Thiago2436/Teste-ACTDIGITAL.git --tags
-
-
+      
+      - name: Verificar as tags enviadas
+        run: git tag -l
+      
       - name: Criar Release no GitHub
         uses: softprops/action-gh-release@v1
-        with:
-          files: .
+       # with:
+         # files: .
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
