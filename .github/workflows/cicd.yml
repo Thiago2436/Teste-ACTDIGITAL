@@ -46,7 +46,7 @@ jobs:
         with:
           files: .
         env:
-          HUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
     needs: release
