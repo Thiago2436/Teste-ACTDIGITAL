@@ -23,7 +23,7 @@ jobs:
         run: npm install
 
       - name: Executar testes
-        run: npm test
+        run: npm test -- --detectOpenHandles
 
       - name: Construir aplicação
         run: npm run build || echo "Nenhum comando de build necessário"

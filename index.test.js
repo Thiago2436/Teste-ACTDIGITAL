@@ -3,12 +3,18 @@ const app = require("./index");
 
 let server;
 
-beforeAll(() => {
-  server = app.listen(3000, () => console.log("Servidor iniciado para testes"));
+beforeAll((done) => {
+  server = app.listen(3000, () => {
+    console.log("Servidor iniciado para testes");
+    done();
+  });
 });
 
 afterAll((done) => {
-  server.close(done); // Fecha o servidor corretamente após os testes
+  server.close(() => {
+    console.log("Servidor de teste fechado");
+    done();
+  });
 });
 
 describe("Testando a API", () => {
