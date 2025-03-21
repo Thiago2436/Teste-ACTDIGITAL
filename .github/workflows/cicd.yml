@@ -60,7 +60,7 @@ jobs:
       - name: Criar Release no GitHub
         uses: softprops/action-gh-release@v1
         with: 
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          token: ${{ secrets.GITHUB-TOKEN }}
 
   deploy:
     needs: release
