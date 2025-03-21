@@ -37,9 +37,10 @@ jobs:
   release:
     needs: build-test
     runs-on: ubuntu-latest
-
-  permissions:
+    
+    permissions: 
       contents: write
+  
 
     steps:
       - name: Checkout do código
